@@ -1,0 +1,23 @@
+int potPosition;  // Variable para almacenar la lectura del potenciómetro
+int ledPin = 9;   // Pin al que está conectado el LED (debe ser un pin PWM)
+
+void setup() {
+  Serial.begin(9600);  // Inicializamos la comunicación serial
+  pinMode(ledPin, OUTPUT);  // Definimos el pin del LED como salida
+}
+
+void loop() {
+  // Leemos la posición del potenciómetro (valor entre 0 y 1023)
+  potPosition = analogRead(A0);  // Usamos el pin A0 para leer el potenciómetro
+
+  // Convertimos ese valor a un rango adecuado para el PWM (0 a 255)
+  int brightness = map(potPosition, 0, 1023, 0, 255);
+
+  // Imprimimos el valor de la posición del potenciómetro en el monitor serie
+  Serial.println(potPosition);
+
+  // Ajustamos el brillo del LED de acuerdo a la lectura del potenciómetro
+  analogWrite(ledPin, brightness);
+
+  delay(100);  // Esperamos un poco antes de hacer la siguiente lectura
+}
